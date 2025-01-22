@@ -52,3 +52,33 @@ EOD
   }
 
 
+# Set Quartus-specific commands
+proc quartus_flow {project_dir top_module} {
+	puts "Starting Quartus flow..."
+	catch {
+		exec quartus_map --read_settings_files=on --write_settings_files=off $top_module
+		exec quartus_fit --read_settings_files=on --write_settings_files=off $top_module
+		exec quartus_asm --read_settings_files=on --write_settings_files=off $top_module
+		exec quartus_sta $top_module
+	} err 
+	if {[info exists err]} {
+	    puts "Quartus flow encountered an error: $err"
+	    return
+	}
+	puts "Quartus flow completed successfully."
+}
+
+# Set Verilator-specific commands
+proc verilator_flow {project_dir top_module} {
+	puts "Starting Verilator flow..."
+	catch {
+		exec verilator --cc $project_dir/$top_module.v -exe sim_main.cpp
+		exec make -C obj_dir -f V$top_module.mk
+		exec ./obj_dir/V$top_module
+	} err
+	if {[info exists err]} {
+		puts "Verilator flow encountered an error: $err"
+		return
+	}
+	puts "Verilator flow completed successfully"
+}

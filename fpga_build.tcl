@@ -82,3 +82,17 @@ proc verilator_flow {project_dir top_module} {
 	}
 	puts "Verilator flow completed successfully"
 }
+
+# Dispatch based on the selected tool
+if {[string tolower $tool] eq "vivado"} {
+	vivado_flow $project_dir $top_module
+} elseif {[string tolower $tool] eq "quartus"} {
+	quartus_flow $project_dir $top_module
+} elseif {[string tolower $tool] eq "verilator"} {
+	verilator_flow $project_dir $top_module
+} else {
+	puts "Error: Unknown tool $tool."
+	exit 1
+}
+
+puts "Build process completed."

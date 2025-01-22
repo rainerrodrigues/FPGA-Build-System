@@ -19,4 +19,8 @@ proc prompt_user {message default} {
 	}
 }
 
+# Prompt the user for settings
+set tool [prompt_user "Select tool (Vivado/Quartus/Verilator)" $tool]
+set project_dir [ prompt_user "Enter the project directory" $project_dir ]
+set top_module [prompt_user "Enter top module name" $top_module ]
 

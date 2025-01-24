@@ -1,0 +1,12 @@
+# DESCRIPTION: Verilator output: Timestamp data for --skip-identical.  Delete at will.
+C "--cc /home/rainer/tcl/FPGA-Build-System/top.v -exe sim_main.cpp"
+S       206   260034  1737749685   612546284  1737748323   362486726 "/home/rainer/tcl/FPGA-Build-System/top.v"
+S   7484256    86148  1734530061   304616705  1581264640           0 "/usr/bin/verilator_bin"
+T      5237   260050  1737750458   202582407  1737750458   202582407 "obj_dir/Vtop.cpp"
+T      2286   260049  1737750458   202582407  1737750458   202582407 "obj_dir/Vtop.h"
+T      1784   260055  1737750458   202582407  1737750458   202582407 "obj_dir/Vtop.mk"
+T       529   260047  1737750458   202582407  1737750458   202582407 "obj_dir/Vtop__Syms.cpp"
+T       767   260048  1737750458   202582407  1737750458   202582407 "obj_dir/Vtop__Syms.h"
+T       227   260136  1737750458   202582407  1737750458   202582407 "obj_dir/Vtop__ver.d"
+T         0        0  1737750458   202582407  1737750458   202582407 "obj_dir/Vtop__verFiles.dat"
+T      1235   260052  1737750458   202582407  1737750458   202582407 "obj_dir/Vtop_classes.mk"

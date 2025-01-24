@@ -67,7 +67,7 @@ proc vivado_flow {project_dir top_module} {
 		exec vivado -mode batch -source <<EOD
 		   open_project $project_dir
 		   read_verilog $project_dir/*.v
-		   synth_design -top $top_module
+		   synth_design -top $top_module $custom_args
 		   opt_design
 		   place_design
 		   route_design
@@ -75,42 +75,42 @@ proc vivado_flow {project_dir top_module} {
 EOD
     } err
     if {[ info exists err]} {
-	    puts "Vivado flow encountered an error: $err"
+	    log_message "Vivado flow encountered an error: $err"
 	    return
 	  }
-	  puts "Vivado flow completed successfully"
+	  log_message "Vivado flow completed successfully"
   }
 
 
 # Set Quartus-specific commands
-proc quartus_flow {project_dir top_module} {
+proc quartus_flow {project_dir top_module custom_args} {
 	puts "Starting Quartus flow..."
 	catch {
-		exec quartus_map --read_settings_files=on --write_settings_files=off $top_module
-		exec quartus_fit --read_settings_files=on --write_settings_files=off $top_module
-		exec quartus_asm --read_settings_files=on --write_settings_files=off $top_module
+		exec quartus_map --read_settings_files=on --write_settings_files=off $top_module $custom_args
+		exec quartus_fit --read_settings_files=on --write_settings_files=off $top_module $custom_args
+		exec quartus_asm --read_settings_files=on --write_settings_files=off $top_module $custom_args
 		exec quartus_sta $top_module
 	} err 
 	if {[info exists err]} {
-	    puts "Quartus flow encountered an error: $err"
+	    log_message "Quartus flow encountered an error: $err"
 	    return
 	}
-	puts "Quartus flow completed successfully."
+	log_message "Quartus flow completed successfully."
 }
 
 # Set Verilator-specific commands
-proc verilator_flow {project_dir top_module} {
+proc verilator_flow {project_dir top_module custom_args} {
 	puts "Starting Verilator flow..."
 	catch {
-		exec verilator --cc $project_dir/$top_module.v -exe sim_main.cpp
-		exec make -C obj_dir -f V$top_module.mk
+		exec verilator --cc $project_dir/$top_module.v -exe sim_main.cpp $custom_args
+		exec make -C obj_dir -f V$top_module.mk CXX=g++-10
 		exec ./obj_dir/V$top_module
 	} err
 	if {[info exists err]} {
-		puts "Verilator flow encountered an error: $err"
+		log_message "Verilator flow encountered an error: $err"
 		return
 	}
-	puts "Verilator flow completed successfully"
+	log_message "Verilator flow completed successfully"
 }
 
 # set Lattice Diamond-specific commands
